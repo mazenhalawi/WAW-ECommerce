@@ -40,6 +40,12 @@ class MyApp extends StatelessWidget {
                 wordSpacing: 0,
                 fontFamily: kDEFAULT_FONT,
               ),
+              headline5: TextStyle(
+                color: kPRIMARY_COLOR,
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                fontFamily: kDEFAULT_FONT,
+              ),
               bodyText2: TextStyle(
                 color: Colors.black38,
                 fontSize: 18,
@@ -49,7 +55,7 @@ class MyApp extends StatelessWidget {
               button: TextStyle(
                 color: Colors.black54,
                 fontSize: 16,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
               ),
             ),
       ),

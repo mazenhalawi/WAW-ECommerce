@@ -50,7 +50,13 @@ class _LoginSceneState extends State<LoginScene> {
           padding: const EdgeInsets.only(top: 10, bottom: 15),
           child: Row(
             children: [
-              Text('Sign in to continue'),
+              Text(
+                'Sign in to continue',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline5
+                    .copyWith(color: Colors.black87),
+              ),
             ],
           ),
         ),
@@ -127,30 +133,48 @@ class _LoginSceneState extends State<LoginScene> {
   }
 
   Widget _getForgetPasswordButton() {
-    return FlatButton(
-      child: Text('Forgot Password?'),
-      onPressed: () {},
+    return Padding(
+      padding: const EdgeInsets.only(top: 12.0),
+      child: Container(
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        height: 20,
+        child: FlatButton(
+          child: Text('Forgot Password?'),
+          onPressed: () {},
+        ),
+      ),
     );
   }
 
   Widget _getSignUpButton(BuildContext context) {
-    return FlatButton(
-      child: RichText(
-        text: TextSpan(
-            text: 'Don\'t have an account? ',
-            style: TextStyle(
-                fontSize: 16,
-                color: Theme.of(context).buttonTheme.colorScheme.secondary),
-            children: [
-              TextSpan(
-                text: 'Sign Up',
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).primaryColor),
-              ),
-            ]),
+    return Padding(
+      padding: const EdgeInsets.only(top: 12.0),
+      child: Container(
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        height: 20,
+        child: FlatButton(
+          child: RichText(
+            text: TextSpan(
+                text: 'Don\'t have an account? ',
+                style: Theme.of(context).textTheme.button,
+                children: [
+                  TextSpan(
+                    text: 'Sign Up',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).primaryColor),
+                  ),
+                ]),
+          ),
+          onPressed: () {},
+        ),
       ),
-      onPressed: () {},
     );
   }
 }

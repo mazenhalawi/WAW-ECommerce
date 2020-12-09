@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:waw_app/Utility/Constants.dart';
 import 'package:waw_app/Views/Buttons/ButtonContainer.dart';
 
 class DefaultButton extends StatelessWidget {
@@ -28,7 +29,7 @@ class DefaultButton extends StatelessWidget {
           title,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 16,
+            fontSize: kBUTTON_TEXT_SIZE,
             fontWeight: FontWeight.w700,
           ),
         ),

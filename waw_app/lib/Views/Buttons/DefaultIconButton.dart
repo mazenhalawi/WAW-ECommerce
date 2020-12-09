@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waw_app/Utility/Constants.dart';
 import 'package:waw_app/Views/Buttons/ButtonContainer.dart';
 
 class DefaultIconButton extends StatelessWidget {
@@ -33,8 +34,8 @@ class DefaultIconButton extends StatelessWidget {
                 title,
                 style: TextStyle(
                   color: Colors.black54,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+                  fontSize: kBUTTON_TEXT_SIZE,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               icon: Container(
