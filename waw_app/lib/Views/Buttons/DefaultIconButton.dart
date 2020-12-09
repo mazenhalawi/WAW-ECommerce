@@ -39,8 +39,8 @@ class DefaultIconButton extends StatelessWidget {
                 ),
               ),
               icon: Container(
-                width: 40,
-                height: 40,
+                width: 30,
+                height: 30,
                 child: prefixIcon,
               ),
               onPressed: onPressed,

@@ -17,18 +17,31 @@ class _LoginSceneState extends State<LoginScene> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _getHeadingTexts(context),
-            _getUsernameField(),
-            _getPasswordField(),
-            _getEmailLoginButton(),
-            Text('or'),
-            _getFacebookLoginButton(),
-            _getForgetPasswordButton(),
-            _getSignUpButton(context),
+            //TODO: Place image instead of container
+            Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+            ),
+            Expanded(
+              child: ListView(children: [
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _getHeadingTexts(context),
+                    _getUsernameField(),
+                    _getPasswordField(),
+                    _getEmailLoginButton(),
+                    _getOrTextSeparator(),
+                    _getFacebookLoginButton(),
+                    _getForgetPasswordButton(),
+                    _getSignUpButton(context),
+                  ],
+                ),
+              ]),
+            ),
           ],
         ),
       ),
@@ -97,7 +110,7 @@ class _LoginSceneState extends State<LoginScene> {
 
   Widget _getEmailLoginButton() {
     return Padding(
-      padding: const EdgeInsets.only(top: 24, bottom: 16),
+      padding: const EdgeInsets.only(top: 24),
       child: Row(
         children: [
           Expanded(
@@ -113,10 +126,17 @@ class _LoginSceneState extends State<LoginScene> {
     );
   }
 
+  Widget _getOrTextSeparator() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: Text('or'),
+    );
+  }
+
   Widget _getFacebookLoginButton() {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 16,
+      padding: const EdgeInsets.only(
+        bottom: 16,
       ),
       child: Row(
         children: [
