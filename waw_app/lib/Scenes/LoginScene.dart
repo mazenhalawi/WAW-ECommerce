@@ -28,7 +28,7 @@ class _LoginSceneState extends State<LoginScene> {
               child: ListView(children: [
                 Column(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     _getHeadingTexts(context),
                     _getUsernameField(),
