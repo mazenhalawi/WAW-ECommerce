@@ -37,11 +37,10 @@ class DefaultIconButton extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              icon: Image.asset(
-                'assets/images/icon_facebook_gray.png',
-                height: 40,
+              icon: Container(
                 width: 40,
-                fit: BoxFit.fill,
+                height: 40,
+                child: prefixIcon,
               ),
               onPressed: onPressed,
             ),

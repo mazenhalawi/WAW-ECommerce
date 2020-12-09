@@ -5,7 +5,6 @@ import 'package:waw_app/Views/Buttons/ButtonContainer.dart';
 class DefaultButton extends StatelessWidget {
   final String title;
   final Function onPressed;
-  final Widget prefixIcon;
   final Color backgroundColor;
   final Color borderColor;
   final double borderWidth;
@@ -13,7 +12,6 @@ class DefaultButton extends StatelessWidget {
   DefaultButton({
     @required this.onPressed,
     this.title,
-    this.prefixIcon,
     this.backgroundColor,
     this.borderColor = Colors.transparent,
     this.borderWidth = 0,
@@ -27,7 +25,7 @@ class DefaultButton extends StatelessWidget {
       borderWidth: borderWidth,
       child: FlatButton(
         child: Text(
-          'Login',
+          title,
           style: TextStyle(
             color: Colors.white,
             fontSize: 16,
