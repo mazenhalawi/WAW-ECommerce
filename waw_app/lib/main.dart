@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Scenes/LoginScene.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -11,10 +13,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
+        accentColor: Colors.deepPurpleAccent,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Container(),
+      home: LoginScene(),
     );
   }
 }
