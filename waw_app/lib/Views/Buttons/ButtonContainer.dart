@@ -17,6 +17,7 @@ class ButtonContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 45,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: backgroundColor,
