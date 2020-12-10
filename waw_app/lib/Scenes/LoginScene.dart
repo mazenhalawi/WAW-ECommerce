@@ -1,16 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:waw_app/Managers/NavManager.dart';
 import 'package:waw_app/Views/Buttons/DefaultButton.dart';
 import 'package:waw_app/Views/Buttons/DefaultIconButton.dart';
 import 'package:waw_app/Views/Text/PasswordField.dart';
 
 class LoginScene extends StatefulWidget {
+  static const SceneName = 'LoginScene';
+
   @override
   _LoginSceneState createState() => _LoginSceneState();
 }
 
 class _LoginSceneState extends State<LoginScene> {
+  String _email = '';
   String _password = '';
 
   @override
@@ -83,6 +87,7 @@ class _LoginSceneState extends State<LoginScene> {
         vertical: 8,
       ),
       child: TextField(
+        controller: TextEditingController(text: _email),
         decoration: InputDecoration(
           hintText: 'Username',
           enabledBorder: UnderlineInputBorder(
@@ -93,6 +98,7 @@ class _LoginSceneState extends State<LoginScene> {
             ),
           ),
         ),
+        onChanged: (value) => _email = value,
       ),
     );
   }
@@ -102,9 +108,7 @@ class _LoginSceneState extends State<LoginScene> {
       padding: const EdgeInsets.symmetric(
         vertical: 8,
       ),
-      child: PasswordField((value) {
-        this._password = value;
-      }),
+      child: PasswordField((value) => this._password = value),
     );
   }
 
@@ -117,7 +121,8 @@ class _LoginSceneState extends State<LoginScene> {
             child: DefaultButton(
               title: 'Login',
               onPressed: () {
-                print(_password);
+                print('email: $_email and password is $_password');
+                NavManager.goTo(Scene.HOME, context);
               },
             ),
           ),

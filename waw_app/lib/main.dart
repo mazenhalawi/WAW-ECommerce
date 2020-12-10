@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:waw_app/Blocs/WishlistBloc.dart';
+import 'package:waw_app/Managers/NavManager.dart';
 
+import 'Blocs/CartBloc.dart';
+import 'Blocs/HomeBloc.dart';
 import 'Scenes/LoginScene.dart';
 import 'Utility/Constants.dart';
 
@@ -11,7 +16,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final app = MaterialApp(
       title: 'WAW Ecommerce',
       theme: ThemeData(
         primarySwatch: kPRIMARY_COLOR,
@@ -59,7 +64,16 @@ class MyApp extends StatelessWidget {
               ),
             ),
       ),
-      home: LoginScene(),
+      initialRoute: LoginScene.SceneName,
+      routes: NavManager.getRoutes,
+    );
+    return MultiProvider(
+      providers: [
+        Provider(create: (_) => CartBloc()),
+        Provider(create: (_) => HomeBloc()),
+        Provider(create: (_) => WishlistBloc())
+      ],
+      child: app,
     );
   }
 }
