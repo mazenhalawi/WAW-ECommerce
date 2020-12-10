@@ -36,7 +36,7 @@ class User {
       profileImage: info['image'],
       address: info['address'],
       phone: info['phone'],
-      gender: info['gender'],
+      gender: int.tryParse(info['gender']),
       status: info['status'],
       nationality: info['nationality'],
       countryOfResidence: info['country_of_residence'],

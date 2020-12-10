@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:waw_app/Blocs/LoginBloc.dart';
+import 'package:waw_app/Managers/NavManager.dart';
 import 'package:waw_app/Models/Result.dart';
 import 'package:waw_app/Views/Alert.dart';
 import 'package:waw_app/Views/Buttons/DefaultButton.dart';
@@ -45,7 +46,8 @@ class _LoginSceneState extends State<LoginScene> {
       subscriptionLogin = _bloc.loginStream$.listen((event) {
         setState(() {
           _isLoading = false;
-          print('user has signed in successfully');
+          //TODO: Navigate user to Home Scene.
+          NavManager.goTo(Scene.HOME, context);
         });
       }, onError: (error) {
         setState(() {

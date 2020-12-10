@@ -7,6 +7,7 @@ class HomeScene extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Home'),
       ),
       body: Container(),

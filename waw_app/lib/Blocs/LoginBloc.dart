@@ -3,34 +3,32 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:waw_app/Enums/ResultStatus.dart';
 import 'package:waw_app/Managers/ConnectionManager.dart';
+import 'package:waw_app/Managers/UserManager.dart';
 import 'package:waw_app/Models/Result.dart';
+import 'package:waw_app/Models/User.dart';
 
 class LoginBloc extends ChangeNotifier {
   final _loginController = StreamController<Result>();
   final _connManager = ConnectionManager();
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
   Stream<Result> get loginStream$ => _loginController.stream;
 
-  void loginUserWithEmail(String email, String password) async {
-    _isLoading = true;
-    notifyListeners();
-
+  Future<void> loginUserWithEmail(String email, String password) async {
     final response = await _connManager.loginUserWith(email, password);
 
-    if (response.status == true) {
-      //TODO: register user with UserManager singleton
-      _loginController.sink.add(Result(status: ResultStatus.SUCCESS));
-    } else {
-      _loginController.addError(
-        Result(status: ResultStatus.FAILURE, message: response.message),
-      );
+    if (response.status == true && response.hasData) {
+      final loggedUser = User.fromMap(response.data['user']);
+
+      if (loggedUser != null) {
+        UserManager.current.initialize(loggedUser);
+        _loginController.sink.add(Result(status: ResultStatus.SUCCESS));
+        return;
+      }
     }
 
-    _isLoading = false;
-    notifyListeners();
+    _loginController.addError(
+      Result(status: ResultStatus.FAILURE, message: response.message),
+    );
   }
 
   void closeStreams() {
