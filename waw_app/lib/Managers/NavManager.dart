@@ -11,8 +11,8 @@ export 'package:waw_app/Enums/Scene.dart';
 
 class NavManager {
   static Map<String, Widget Function(BuildContext)> get getRoutes => {
-        LoginScene.SceneName: (context) =>
-            Provider(create: (_) => LoginBloc(), child: LoginScene()),
+        LoginScene.SceneName: (context) => ChangeNotifierProvider(
+            create: (_) => LoginBloc(), child: LoginScene()),
         HomeScene.SceneName: (context) => HomeScene(),
         CartScene.SceneName: (context) => CartScene(),
         WishlistScene.SceneName: (context) => WishlistScene(),

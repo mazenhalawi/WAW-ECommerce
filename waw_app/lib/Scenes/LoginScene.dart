@@ -1,11 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:waw_app/Blocs/LoginBloc.dart';
+import 'package:waw_app/Models/Result.dart';
 import 'package:waw_app/Views/Alert.dart';
 import 'package:waw_app/Views/Buttons/DefaultButton.dart';
 import 'package:waw_app/Views/Buttons/DefaultIconButton.dart';
+import 'package:waw_app/Views/Spinner.dart';
 import 'package:waw_app/Views/Text/PasswordField.dart';
 
 class LoginScene extends StatefulWidget {
@@ -20,6 +24,14 @@ class _LoginSceneState extends State<LoginScene> {
   String _email = '';
   String _password = '';
   LoginBloc _bloc;
+  bool _isLoading = false;
+  StreamSubscription<Result<dynamic>> subscriptionLogin;
+
+  @override
+  void dispose() {
+    super.dispose();
+    subscriptionLogin.cancel();
+  }
 
   @override
   void didChangeDependencies() {
@@ -30,39 +42,54 @@ class _LoginSceneState extends State<LoginScene> {
 
     if (_bloc == null) {
       _bloc = Provider.of<LoginBloc>(context, listen: false);
+      subscriptionLogin = _bloc.loginStream$.listen((event) {
+        setState(() {
+          _isLoading = false;
+          print('user has signed in successfully');
+        });
+      }, onError: (error) {
+        setState(() {
+          _isLoading = false;
+          Alert(context: context, title: 'Failure', content: error.message)
+              .show();
+        });
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-        child: Column(
-          children: [
-            //TODO: Place image instead of container
-            Container(
-              height: _mediaQuery.size.height * 0.3,
-            ),
-            Expanded(
-              child: ListView(children: [
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _getHeadingTexts(context),
-                    _getUsernameField(),
-                    _getPasswordField(),
-                    _getEmailLoginButton(context),
-                    _getOrTextSeparator(),
-                    _getFacebookLoginButton(),
-                    _getForgetPasswordButton(),
-                    _getSignUpButton(context),
-                  ],
-                ),
-              ]),
-            ),
-          ],
+      body: Spinner(
+        isVisible: _isLoading,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+          child: Column(
+            children: [
+              //TODO: Place image instead of container
+              Container(
+                height: _mediaQuery.size.height * 0.3,
+              ),
+              Expanded(
+                child: ListView(children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      _getHeadingTexts(context),
+                      _getUsernameField(),
+                      _getPasswordField(),
+                      _getEmailLoginButton(context),
+                      _getOrTextSeparator(),
+                      _getFacebookLoginButton(),
+                      _getForgetPasswordButton(),
+                      _getSignUpButton(context),
+                    ],
+                  ),
+                ]),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -137,11 +164,10 @@ class _LoginSceneState extends State<LoginScene> {
             child: DefaultButton(
               title: 'Login',
               onPressed: () {
-                Alert(
-                        context: context,
-                        title: 'Credentials',
-                        content: 'email: $_email and password is $_password')
-                    .show();
+                // setState(() {
+                //   _isLoading = true;
+                // });
+                _bloc.loginUserWithEmail(_email, _password);
               },
             ),
           ),

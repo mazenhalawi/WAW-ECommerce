@@ -25,6 +25,7 @@ class ConnectionManager {
       final response = await http.post(url, body: body, headers: header);
 
       final json = jsonDecode(response.body);
+
       return ApiResponse.fromJSON(json);
     } on Exception {
       return ApiResponse(
