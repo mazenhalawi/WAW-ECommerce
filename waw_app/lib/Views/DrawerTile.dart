@@ -5,13 +5,15 @@ class DrawerTile extends StatelessWidget {
   final String title;
   final bool isSelected;
   final Function onTap;
+  final Icon icon;
 
-  DrawerTile({@required this.title, this.isSelected = false, this.onTap});
+  DrawerTile(
+      {@required this.title, this.isSelected = false, this.onTap, this.icon});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(Icons.phone),
+      leading: icon,
       title: Text(title),
       trailing: isSelected ? highlightedCircle() : null,
       onTap: onTap,

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:waw_app/Scenes/BaseScene.dart';
 import 'package:waw_app/Scenes/CartScene.dart';
 import 'package:waw_app/Scenes/HomeScene.dart';
 import 'package:waw_app/Scenes/LoginScene.dart';
 import 'package:waw_app/Scenes/WishlistScene.dart';
 
-enum Scene { LOGIN, HOME, WISHLIST, CART }
+enum Scene { BASE, LOGIN, HOME, WISHLIST, CART }
 
 extension Getters on Scene {
   String get name {
     switch (this) {
+      case Scene.BASE:
+        return BaseScene.SceneName;
       case Scene.LOGIN:
         return LoginScene.SceneName;
       case Scene.HOME:
@@ -22,6 +25,8 @@ extension Getters on Scene {
 
   String get title {
     switch (this) {
+      case Scene.BASE:
+        return 'Base';
       case Scene.LOGIN:
         return 'Login';
       case Scene.HOME:
@@ -35,6 +40,8 @@ extension Getters on Scene {
 
   IconData get icon {
     switch (this) {
+      case Scene.BASE:
+        return Icons.cancel;
       case Scene.LOGIN:
         return Icons.account_circle;
       case Scene.HOME:

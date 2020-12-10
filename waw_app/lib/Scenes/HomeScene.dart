@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:waw_app/Views/NavDrawer.dart';
 
-class HomeScene extends StatelessWidget {
+class HomeScene extends StatefulWidget {
   static const SceneName = 'HomeScene';
 
   @override
+  _HomeSceneState createState() => _HomeSceneState();
+}
+
+class _HomeSceneState extends State<HomeScene>
+    with AutomaticKeepAliveClientMixin<HomeScene> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Campaign'),
+      body: Container(
+        child: Center(child: TextField()),
       ),
-      body: Container(),
-      drawer: NavDrawer(selectedScene: Scene.HOME),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -198,7 +198,7 @@ class _LoginSceneState extends State<LoginScene> {
               prefixIcon: Image.asset('assets/images/icon_facebook_gray.png'),
               onPressed: () {
                 //TODO: Remove this later - just for testing Scene
-                NavManager.goTo(Scene.HOME, context);
+                NavManager.goTo(Scene.BASE, context);
               },
             ),
           ),
