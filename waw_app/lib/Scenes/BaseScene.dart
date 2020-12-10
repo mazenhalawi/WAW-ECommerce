@@ -26,7 +26,6 @@ class _BaseSceneState extends State<BaseScene> {
       drawer: NavDrawer(
         selectedScene: _selectedScene,
         onTap: (selectedScene) {
-          print(_selectedScene.title);
           setState(() {
             _selectedScene = selectedScene;
             _pageController.jumpToPage(_getPagePosition(selectedScene));
