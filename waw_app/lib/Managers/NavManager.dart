@@ -10,12 +10,16 @@ import 'package:waw_app/Scenes/WishlistScene.dart';
 export 'package:waw_app/Enums/Scene.dart';
 
 class NavManager {
+  static final homeScene = HomeScene();
+  static final cartScene = CartScene();
+  static final wishlistScene = WishlistScene();
+
   static Map<String, Widget Function(BuildContext)> get getRoutes => {
         LoginScene.SceneName: (context) => ChangeNotifierProvider(
             create: (_) => LoginBloc(), child: LoginScene()),
-        HomeScene.SceneName: (context) => HomeScene(),
-        CartScene.SceneName: (context) => CartScene(),
-        WishlistScene.SceneName: (context) => WishlistScene(),
+        HomeScene.SceneName: (context) => homeScene,
+        CartScene.SceneName: (context) => cartScene,
+        WishlistScene.SceneName: (context) => wishlistScene,
       };
 
   //TODO: create navigation goToScene and enums

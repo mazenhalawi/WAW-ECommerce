@@ -196,7 +196,10 @@ class _LoginSceneState extends State<LoginScene> {
             child: DefaultIconButton(
               title: 'Login with facebook',
               prefixIcon: Image.asset('assets/images/icon_facebook_gray.png'),
-              onPressed: () {},
+              onPressed: () {
+                //TODO: Remove this later - just for testing Scene
+                NavManager.goTo(Scene.HOME, context);
+              },
             ),
           ),
         ],

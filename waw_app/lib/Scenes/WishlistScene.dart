@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waw_app/Views/NavDrawer.dart';
 
 class WishlistScene extends StatelessWidget {
   static const SceneName = 'WishlistScene';
@@ -10,6 +11,7 @@ class WishlistScene extends StatelessWidget {
         title: Text('Wish List'),
       ),
       body: Container(),
+      drawer: NavDrawer(selectedScene: Scene.WISHLIST),
     );
   }
 }
