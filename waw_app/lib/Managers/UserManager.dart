@@ -15,4 +15,6 @@ class UserManager {
 
   String get fullName =>
       _currentUser.firstName + ' ' + (_currentUser.lastName ?? '');
+
+  String get token => _currentUser.token;
 }

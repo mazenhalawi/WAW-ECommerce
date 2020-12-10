@@ -17,8 +17,7 @@ void main() {
       reason: 'response should return body if successful',
     );
 
-    final user = User.fromMap(response.data as Map<String, dynamic>);
-    print(user.token);
+    final user = User.fromMap(response.data['user'] as Map<String, dynamic>);
 
     expect(
       user,

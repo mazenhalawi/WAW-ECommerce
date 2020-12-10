@@ -11,6 +11,13 @@ class ConnectionManager {
     http = Client();
   }
 
+  ApiResponse get offlineErrorReponse => ApiResponse(
+        data: null,
+        status: false,
+        message: 'Please check your internet connection and try again.',
+        code: 0,
+      );
+
   Future<ApiResponse> loginUserWith(String email, String password) async {
     final url = BASE_URL + ENDPOINT_AUTH;
 
@@ -28,12 +35,25 @@ class ConnectionManager {
 
       return ApiResponse.fromJSON(json);
     } on Exception {
-      return ApiResponse(
-        data: null,
-        status: false,
-        message: 'Please check your internet connection and try again.',
-        code: 0,
-      );
+      return offlineErrorReponse;
+    }
+  }
+
+  Future<ApiResponse> getCampaigns() async {
+    final url = BASE_URL + ENDPOINT_CAMPAIGN;
+
+    final headers = {
+      'Accept-Language': 'en',
+      'Authorization': 'Bearer 2|z5FbuwFBPZCsMBvDLVgbZe3joCF1nNJXKgPVNOPq'
+    };
+
+    try {
+      final response = await http.get(url, headers: headers);
+      final json = jsonDecode(response.body);
+
+      return ApiResponse.fromJSON(json);
+    } on Exception {
+      return offlineErrorReponse;
     }
   }
 }
