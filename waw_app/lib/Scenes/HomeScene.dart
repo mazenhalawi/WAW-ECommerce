@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:waw_app/Blocs/HomeBloc.dart';
 import 'package:waw_app/Views/Alert.dart';
+import 'package:waw_app/Views/CampaignView.dart';
 
 class HomeScene extends StatefulWidget {
   static const SceneName = 'HomeScene';
@@ -55,11 +56,22 @@ class _HomeSceneState extends State<HomeScene>
               } else if (snapshot.hasData) {
                 final campaigns = snapshot.data;
                 return ListView(
-                  children: campaigns.map((e) => Text(e.product.name)).toList(),
+                  children: campaigns
+                      .map((e) => Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 50.0, vertical: 20),
+                            child: CampaignView(
+                              campaign: e,
+                            ),
+                          ))
+                      .toList(),
                 );
               }
 
-              return Container();
+              return Container(
+                child: Center(
+                    child: Text('No data found.\n Swipe down to refresh!')),
+              );
             },
           ),
         ),

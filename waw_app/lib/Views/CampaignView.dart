@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:waw_app/Models/Campaign.dart';
 import 'package:waw_app/Utility/Constants.dart';
 import 'package:waw_app/Utility/wawapp_icons.dart';
 
 class CampaignView extends StatelessWidget {
+  final Campaign campaign;
   final double containerWidthRatio = 0.75;
   final double flyerCardWidthRatio = 0.25;
+
+  CampaignView({@required this.campaign});
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +33,15 @@ class CampaignView extends StatelessWidget {
           Positioned(
             left: -30,
             top: 30,
-            child: FlyerCard(mediaQuery),
+            child: FlyerCard(
+                mediaQuery: mediaQuery, imageLink: campaign.productImageLink),
           ),
           //Lower Right Image - Win Image
           Positioned(
             bottom: 30,
             right: -30,
-            child: FlyerCard(mediaQuery),
+            child: FlyerCard(
+                mediaQuery: mediaQuery, imageLink: campaign.prizeImageLink),
           ),
           //Horizontal Line
           Positioned(
@@ -73,13 +79,14 @@ class CampaignView extends StatelessWidget {
           Positioned(
             top: mediaQuery.size.width / 1.8 - 50,
             left: mediaQuery.size.width * 0.75 / 2 - 50,
-            child: CircularIndicator(),
+            child: CircularIndicator(completion: campaign.qtyPercentage),
           ),
           //Circle Sales Info
           Positioned(
             top: mediaQuery.size.width / 1.8 - 35,
             left: mediaQuery.size.width * 0.75 / 2 - 35,
-            child: SalesInfoCircle(),
+            child: SalesInfoCircle(
+                sold: campaign.qtySold, stock: campaign.qtyStock),
           ),
           //Quantity Adjuster
           Positioned(
@@ -91,26 +98,29 @@ class CampaignView extends StatelessWidget {
           Positioned(
             top: 30,
             right: -15,
-            child: PriceTag(mediaQuery),
+            child:
+                PriceTag(mediaQuery: mediaQuery, price: campaign.productPrice),
           ),
           //Campaign Label
           Positioned(
             top: 65,
             left: mediaQuery.size.width * 0.25 - 15,
-            child: ProductName(mediaQuery),
+            child:
+                ProductName(mediaQuery: mediaQuery, name: campaign.productName),
           ),
           //Prize Label
           Positioned(
             left: 20,
             bottom: mediaQuery.size.width * flyerCardWidthRatio - 60,
-            child: PrizeLabel(mediaQuery),
+            child: PrizeLabel(mediaQuery: mediaQuery, name: campaign.prizeName),
           ),
         ],
       ),
     );
   }
 
-  Widget PrizeLabel(MediaQueryData mediaQuery) {
+  Widget PrizeLabel(
+      {@required MediaQueryData mediaQuery, @required String name}) {
     return Container(
       width:
           mediaQuery.size.width * (containerWidthRatio - flyerCardWidthRatio) -
@@ -137,7 +147,7 @@ class CampaignView extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'The all new Mercedes G63 AMG 2020',
+                  name,
                   softWrap: true,
                   maxLines: 3,
                   style: TextStyle(fontSize: 15),
@@ -151,7 +161,8 @@ class CampaignView extends StatelessWidget {
     );
   }
 
-  Widget ProductName(MediaQueryData mediaQuery) {
+  Widget ProductName(
+      {@required MediaQueryData mediaQuery, @required String name}) {
     return Container(
       width: mediaQuery.size.width * 0.4,
       height: 70,
@@ -172,7 +183,7 @@ class CampaignView extends StatelessWidget {
                 child: Container(
                   child: SizedBox(
                     child: Text(
-                      'Product name here',
+                      name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -186,7 +197,8 @@ class CampaignView extends StatelessWidget {
     );
   }
 
-  Widget PriceTag(MediaQueryData mediaQuery) {
+  Widget PriceTag(
+      {@required MediaQueryData mediaQuery, @required String price}) {
     return Container(
       height: 35,
       width: mediaQuery.size.width * 0.32,
@@ -203,7 +215,7 @@ class CampaignView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'AED 3250.00',
+            price,
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -269,7 +281,7 @@ class CampaignView extends StatelessWidget {
     );
   }
 
-  Widget SalesInfoCircle() {
+  Widget SalesInfoCircle({@required int sold = 0, @required int stock = 0}) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -290,7 +302,7 @@ class CampaignView extends StatelessWidget {
           FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                '382',
+                sold.toString(),
                 style: TextStyle(
                     color: kPRIMARY_COLOR,
                     fontWeight: FontWeight.w800,
@@ -312,7 +324,7 @@ class CampaignView extends StatelessWidget {
           FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                '975',
+                stock.toString(),
                 style: TextStyle(fontSize: 11),
               )),
         ],
@@ -320,7 +332,7 @@ class CampaignView extends StatelessWidget {
     );
   }
 
-  Widget CircularIndicator() {
+  Widget CircularIndicator({double completion = 0}) {
     return SizedBox(
       width: 100,
       height: 100,
@@ -328,7 +340,7 @@ class CampaignView extends StatelessWidget {
         backgroundColor: Color.fromRGBO(227, 207, 235, 1.0),
         valueColor: AlwaysStoppedAnimation<Color>(kPRIMARY_COLOR),
         strokeWidth: 6,
-        value: 0.15,
+        value: completion,
       ),
     );
   }
@@ -359,7 +371,8 @@ class CampaignView extends StatelessWidget {
     );
   }
 
-  Widget FlyerCard(MediaQueryData mediaQuery) {
+  Widget FlyerCard(
+      {@required MediaQueryData mediaQuery, @required String imageLink}) {
     return Card(
       elevation: 7,
       clipBehavior: Clip.antiAlias,
@@ -371,7 +384,7 @@ class CampaignView extends StatelessWidget {
         height: mediaQuery.size.width * flyerCardWidthRatio,
         color: Colors.white,
         child: Image.network(
-          'https://wawwinner.ae/dev/public/storage/products/CL04.png',
+          imageLink,
           fit: BoxFit.fitHeight,
         ),
       ),

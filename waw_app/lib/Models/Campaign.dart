@@ -60,4 +60,26 @@ class Campaign {
           .toList(),
     );
   }
+
+  int get campaignID => this.id;
+
+  int get productID => this.product.id;
+
+  int get prizeID => this.prize.id;
+
+  String get productImageLink => this.product.image;
+
+  String get prizeImageLink => this.prize.image;
+
+  String get productName => this.product.name;
+
+  String get prizeName => this.prize.name;
+
+  String get productPrice => 'AED ' + this.price.toString() + '.00';
+
+  int get qtySold => this.quantitySold;
+
+  int get qtyStock => this.productQuantity;
+
+  double get qtyPercentage => this.quantitySold / this.productQuantity;
 }
