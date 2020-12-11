@@ -42,6 +42,7 @@ class ConnectionManager {
   Future<ApiResponse> getCampaigns() async {
     final url = BASE_URL + ENDPOINT_CAMPAIGN;
 
+    //TODO: change Authorization value to token from UserManager.current
     final headers = {
       'Accept-Language': 'en',
       'Authorization': 'Bearer 2|z5FbuwFBPZCsMBvDLVgbZe3joCF1nNJXKgPVNOPq'
