@@ -5,12 +5,15 @@ class ImageCard extends StatelessWidget {
   final double height;
   final String imageLink;
   final double elevation;
+  final Color backgroundColor;
 
-  ImageCard(
-      {@required this.width,
-      @required this.height,
-      @required this.imageLink,
-      this.elevation = 7});
+  ImageCard({
+    @required this.width,
+    @required this.height,
+    @required this.imageLink,
+    this.elevation = 7,
+    this.backgroundColor = Colors.white,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class ImageCard extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
-        color: Colors.white,
+        color: backgroundColor,
         child: Image.network(
           imageLink,
           fit: BoxFit.fitHeight,

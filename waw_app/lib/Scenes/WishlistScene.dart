@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:waw_app/Blocs/WishlistBloc.dart';
+import 'package:waw_app/Views/WishlistView.dart';
 
 class WishlistScene extends StatefulWidget {
   static const SceneName = 'WishlistScene';
@@ -11,6 +13,10 @@ class WishlistScene extends StatefulWidget {
 
 class _WishlistSceneState extends State<WishlistScene>
     with AutomaticKeepAliveClientMixin<WishlistScene> {
+  final imageCardRatio = 0.25;
+  final cardWidthRatio = 0.9;
+  final cardHeightRatio = 0.7;
+
   WishlistBloc _bloc;
   MediaQueryData _mediaQuery;
 
@@ -30,16 +36,7 @@ class _WishlistSceneState extends State<WishlistScene>
     return Scaffold(
       body: Container(
         child: Center(
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            elevation: 6,
-            child: Container(
-              width: _mediaQuery.size.width * 0.9,
-              height: _mediaQuery.size.width * 0.6,
-            ),
-          ),
+          child: WishlistView(),
         ),
       ),
     );

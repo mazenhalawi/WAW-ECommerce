@@ -5,9 +5,13 @@ class CircularButton extends StatelessWidget {
   final Function onPressed;
   final double radius;
   final Widget icon;
+  final Color backgroundColor;
 
   CircularButton(
-      {@required this.icon, this.radius = 10, @required this.onPressed});
+      {@required this.icon,
+      this.radius = 10,
+      @required this.onPressed,
+      this.backgroundColor = kPRIMARY_COLOR});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,7 @@ class CircularButton extends StatelessWidget {
       onTap: onPressed,
       child: CircleAvatar(
         radius: radius,
-        backgroundColor: kPRIMARY_COLOR,
+        backgroundColor: backgroundColor,
         child: FittedBox(
           fit: BoxFit.scaleDown,
           child: IconButton(
