@@ -7,4 +7,6 @@ class Result<T> {
   final String message;
 
   Result({@required this.status, this.data, this.message});
+
+  bool get hasData => data != null;
 }

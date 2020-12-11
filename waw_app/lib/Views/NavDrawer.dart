@@ -8,11 +8,13 @@ export 'package:waw_app/Enums/Scene.dart';
 
 class NavDrawer extends StatelessWidget {
   final Scene selectedScene;
+  final Function onTap;
 
-  NavDrawer({this.selectedScene});
+  NavDrawer({this.selectedScene, this.onTap});
 
-  List<Scene> get scenes =>
-      Scene.values.where((scene) => scene != Scene.LOGIN).toList();
+  List<Scene> get scenes => Scene.values
+      .where((scene) => ![Scene.BASE, Scene.LOGIN].contains(scene))
+      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +31,9 @@ class NavDrawer extends StatelessWidget {
           ),
           ...scenes
               .map((e) => DrawerTile(
-                    isSelected:
-                        selectedScene == null ? false : e == selectedScene,
+                    isSelected: e == selectedScene,
                     title: e.title,
-                    onTap: selectedScene == e
-                        ? () => Navigator.pop(context)
-                        : () => NavManager.goTo(e, context),
+                    onTap: () => onTap(e),
                   ))
               .toList()
         ],

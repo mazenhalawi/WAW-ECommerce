@@ -1,17 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:waw_app/Views/NavDrawer.dart';
+import 'package:provider/provider.dart';
+import 'package:waw_app/Blocs/CartBloc.dart';
 
-class CartScene extends StatelessWidget {
+class CartScene extends StatefulWidget {
   static const SceneName = 'CartScene';
+
+  @override
+  _CartSceneState createState() => _CartSceneState();
+}
+
+class _CartSceneState extends State<CartScene>
+    with AutomaticKeepAliveClientMixin<CartScene> {
+  CartBloc _bloc;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_bloc == null) {
+      _bloc = Provider.of<CartBloc>(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Shopping Cart'),
+      body: Container(
+        child: Text(
+            'number of items in cart: ${_bloc.numberOFItemsInCart.toString()}'),
       ),
-      body: Container(),
-      drawer: NavDrawer(selectedScene: Scene.CART),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
