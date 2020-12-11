@@ -8,7 +8,11 @@ import 'package:waw_app/Models/Campaign.dart';
 import 'package:waw_app/Utility/Constants.dart';
 import 'package:waw_app/Utility/wawapp_icons.dart';
 import 'package:waw_app/Views/CircularButton.dart';
+import 'package:waw_app/Views/CircularIndicator.dart';
+import 'package:waw_app/Views/ImageCard.dart';
 import 'package:waw_app/Views/QuantityAdjuster.dart';
+
+import 'InfoCircle.dart';
 
 class CampaignView extends StatelessWidget {
   final Campaign campaign;
@@ -39,15 +43,21 @@ class CampaignView extends StatelessWidget {
           Positioned(
             left: -30,
             top: 30,
-            child: FlyerCard(
-                mediaQuery: mediaQuery, imageLink: campaign.productImageLink),
+            child: ImageCard(
+              width: mediaQuery.size.width * flyerCardWidthRatio,
+              height: mediaQuery.size.width * flyerCardWidthRatio,
+              imageLink: campaign.productImageLink,
+            ),
           ),
           //Lower Right Image - Win Image
           Positioned(
             bottom: 30,
             right: -30,
-            child: FlyerCard(
-                mediaQuery: mediaQuery, imageLink: campaign.prizeImageLink),
+            child: ImageCard(
+              width: mediaQuery.size.width * flyerCardWidthRatio,
+              height: mediaQuery.size.width * flyerCardWidthRatio,
+              imageLink: campaign.prizeImageLink,
+            ),
           ),
           //Horizontal Line
           Positioned(
@@ -99,14 +109,17 @@ class CampaignView extends StatelessWidget {
           Positioned(
             top: mediaQuery.size.width / 1.8 - 50,
             left: mediaQuery.size.width * 0.75 / 2 - 50,
-            child: CircularIndicator(completion: campaign.qtyPercentage),
+            child: CircularIndicator(
+              width: 100,
+              height: 100,
+              percentage: campaign.qtyPercentage,
+            ),
           ),
           //Circle Sales Info
           Positioned(
             top: mediaQuery.size.width / 1.8 - 35,
             left: mediaQuery.size.width * 0.75 / 2 - 35,
-            child: SalesInfoCircle(
-                sold: campaign.qtySold, stock: campaign.qtyStock),
+            child: InfoCircle(sold: campaign.qtySold, stock: campaign.qtyStock),
           ),
           //Quantity Adjuster
           Positioned(
@@ -256,95 +269,11 @@ class CampaignView extends StatelessWidget {
     );
   }
 
-  Widget SalesInfoCircle({@required int sold, @required int stock}) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(-1, 1),
-            color: Colors.black54,
-            blurRadius: 4,
-          )
-        ],
-      ),
-      width: 70,
-      height: 70,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                sold.toString(),
-                style: TextStyle(
-                    color: kPRIMARY_COLOR,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 22,
-                    letterSpacing: -2),
-              )),
-          FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                'SOLD',
-                style: TextStyle(fontSize: 10, color: Colors.black54),
-              )),
-          FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                'out of',
-                style: TextStyle(fontSize: 10),
-              )),
-          FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                stock.toString(),
-                style: TextStyle(fontSize: 11),
-              )),
-        ],
-      ),
-    );
-  }
-
-  Widget CircularIndicator({double completion = 0}) {
-    return SizedBox(
-      width: 100,
-      height: 100,
-      child: CircularProgressIndicator(
-        backgroundColor: Color.fromRGBO(227, 207, 235, 1.0),
-        valueColor: AlwaysStoppedAnimation<Color>(kPRIMARY_COLOR),
-        strokeWidth: 6,
-        value: completion,
-      ),
-    );
-  }
-
   Widget HorizontalLine(MediaQueryData mediaQuery) {
     return Container(
       height: 1,
       width: mediaQuery.size.width * 0.65,
       color: Colors.black26,
-    );
-  }
-
-  Widget FlyerCard(
-      {@required MediaQueryData mediaQuery, @required String imageLink}) {
-    return Card(
-      elevation: 7,
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Container(
-        width: mediaQuery.size.width * flyerCardWidthRatio,
-        height: mediaQuery.size.width * flyerCardWidthRatio,
-        color: Colors.white,
-        child: Image.network(
-          imageLink,
-          fit: BoxFit.fitHeight,
-        ),
-      ),
     );
   }
 }

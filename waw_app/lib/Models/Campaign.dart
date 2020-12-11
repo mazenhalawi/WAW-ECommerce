@@ -77,6 +77,8 @@ class Campaign {
 
   String get productPrice => 'AED ' + this.price.toString() + '.00';
 
+  String get productPriceWhole => 'AED ' + this.price.toString();
+
   int get qtySold => this.quantitySold;
 
   int get qtyStock => this.productQuantity;
