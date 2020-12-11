@@ -33,10 +33,12 @@ class _WishlistSceneState extends State<WishlistScene>
 
   @override
   Widget build(BuildContext context) {
+    final campaigns = Provider.of<WishlistBloc>(context).wishListed;
+
     return Scaffold(
       body: Container(
-        child: Center(
-          child: WishlistView(),
+        child: ListView(
+          children: campaigns.map((e) => WishlistView(campaign: e)).toList(),
         ),
       ),
     );
