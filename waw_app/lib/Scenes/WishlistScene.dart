@@ -12,6 +12,7 @@ class WishlistScene extends StatefulWidget {
 class _WishlistSceneState extends State<WishlistScene>
     with AutomaticKeepAliveClientMixin<WishlistScene> {
   WishlistBloc _bloc;
+  MediaQueryData _mediaQuery;
 
   @override
   void didChangeDependencies() {
@@ -19,14 +20,27 @@ class _WishlistSceneState extends State<WishlistScene>
     if (_bloc == null) {
       _bloc = Provider.of<WishlistBloc>(context);
     }
+    if (_mediaQuery == null) {
+      _mediaQuery = MediaQuery.of(context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Text(
-            'Number of items in Wish List is \n\n${_bloc.listCount.toString()}'),
+        child: Center(
+          child: Card(
+            clipBehavior: Clip.antiAlias,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            elevation: 6,
+            child: Container(
+              width: _mediaQuery.size.width * 0.9,
+              height: _mediaQuery.size.width * 0.6,
+            ),
+          ),
+        ),
       ),
     );
   }
