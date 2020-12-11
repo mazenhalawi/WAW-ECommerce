@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(create: (_) => CartBloc()),
-        Provider(create: (_) => HomeBloc()),
+        ChangeNotifierProvider(create: (_) => HomeBloc()),
         Provider(create: (_) => WishlistBloc())
       ],
       child: app,

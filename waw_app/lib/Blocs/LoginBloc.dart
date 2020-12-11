@@ -14,10 +14,10 @@ class LoginBloc extends ChangeNotifier {
   Stream<Result> get loginStream$ => _loginController.stream;
 
   Future<void> loginUserWithEmail(String email, String password) async {
-    final response = await _connManager.loginUserWith(email, password);
+    final result = await _connManager.loginUserWith(email, password);
 
-    if (response.status == true && response.hasData) {
-      final loggedUser = User.fromMap(response.data['user']);
+    if (result.status == ResultStatus.SUCCESS && result.hasData) {
+      final loggedUser = User.fromJSON(result.data);
 
       if (loggedUser != null) {
         UserManager.current.initialize(loggedUser);
@@ -27,7 +27,7 @@ class LoginBloc extends ChangeNotifier {
     }
 
     _loginController.addError(
-      Result(status: ResultStatus.FAILURE, message: response.message),
+      Result(status: ResultStatus.FAILURE, message: result.message),
     );
   }
 

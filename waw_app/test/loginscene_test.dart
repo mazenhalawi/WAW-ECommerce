@@ -9,15 +9,15 @@ void main() {
     print(url);
 
     final conn = ConnectionManager();
-    final response = await conn.loginUserWith('shamma@big-bang.ae', '12345678');
+    final result = await conn.loginUserWith('shamma@big-bang.ae', '12345678');
 
     expect(
-      response.status,
+      result.status,
       true,
       reason: 'response should return body if successful',
     );
 
-    final user = User.fromMap(response.data['user'] as Map<String, dynamic>);
+    final user = User.fromJSON(result.data as Map<String, dynamic>);
 
     expect(
       user,

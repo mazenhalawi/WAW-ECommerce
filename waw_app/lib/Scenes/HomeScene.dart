@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:waw_app/Blocs/HomeBloc.dart';
 import 'package:waw_app/Views/CampaignView.dart';
 
 class HomeScene extends StatefulWidget {
@@ -11,15 +13,13 @@ class HomeScene extends StatefulWidget {
 
 class _HomeSceneState extends State<HomeScene>
     with AutomaticKeepAliveClientMixin<HomeScene> {
-  MediaQueryData mediaQuery;
-  final double containerWidthRatio = 0.75;
-  final double flyerCardWidthRatio = 0.25;
+  HomeBloc _bloc;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (mediaQuery == null) {
-      mediaQuery = MediaQuery.of(context);
+    if (_bloc == null) {
+      _bloc = Provider.of<HomeBloc>(context);
     }
   }
 

@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' show Client;
+import 'package:waw_app/Enums/ResultStatus.dart';
 import 'package:waw_app/Models/ApiResponse.dart';
+import 'package:waw_app/Models/Result.dart';
 import 'package:waw_app/Utility/Constants.dart';
 
 class ConnectionManager {
@@ -11,14 +13,13 @@ class ConnectionManager {
     http = Client();
   }
 
-  ApiResponse get offlineErrorReponse => ApiResponse(
+  Result get offlineErrorReponse => Result(
+        status: ResultStatus.FAILURE,
         data: null,
-        status: false,
         message: 'Please check your internet connection and try again.',
-        code: 0,
       );
 
-  Future<ApiResponse> loginUserWith(String email, String password) async {
+  Future<Result> loginUserWith(String email, String password) async {
     final url = BASE_URL + ENDPOINT_AUTH;
 
     final body = {'email': email, 'password': password};
@@ -33,13 +34,18 @@ class ConnectionManager {
 
       final json = jsonDecode(response.body);
 
-      return ApiResponse.fromJSON(json);
+      final apiResponse = ApiResponse.fromJSON(json);
+      Result result = apiResponse.toResult();
+      return Result(
+          status: result.status,
+          data: result.data['user'],
+          message: result.message);
     } on Exception {
       return offlineErrorReponse;
     }
   }
 
-  Future<ApiResponse> getCampaigns() async {
+  Future<Result> getCampaigns() async {
     final url = BASE_URL + ENDPOINT_CAMPAIGN;
 
     //TODO: change Authorization value to token from UserManager.current
@@ -52,7 +58,8 @@ class ConnectionManager {
       final response = await http.get(url, headers: headers);
       final json = jsonDecode(response.body);
 
-      return ApiResponse.fromJSON(json);
+      final apiResponse = ApiResponse.fromJSON(json);
+      return apiResponse.toResult();
     } on Exception {
       return offlineErrorReponse;
     }

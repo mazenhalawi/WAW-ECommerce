@@ -27,7 +27,7 @@ class User {
     this.token,
   });
 
-  factory User.fromMap(Map<String, dynamic> info) {
+  factory User.fromJSON(Map<String, dynamic> info) {
     return User(
       id: info['id'],
       firstName: info['first_name'],

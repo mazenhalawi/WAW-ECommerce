@@ -1,3 +1,6 @@
+import 'package:waw_app/Enums/ResultStatus.dart';
+import 'package:waw_app/Models/Result.dart';
+
 class ApiResponse {
   final data;
   final bool status;
@@ -31,4 +34,11 @@ class ApiResponse {
   bool get isSuccessful => status;
 
   bool get hasData => data != null;
+
+  Result toResult() {
+    return Result(
+        status: this.status ? ResultStatus.SUCCESS : ResultStatus.FAILURE,
+        data: this.hasData ? data : null,
+        message: this.message);
+  }
 }
