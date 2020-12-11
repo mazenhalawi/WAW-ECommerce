@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 
 class Offer {
-  int id;
-  int productLimit;
-  int extraTicketCount;
+  final int id;
+  final int productLimit;
+  final int extraTicketCount;
 
   Offer({@required this.id, this.productLimit, this.extraTicketCount});
 

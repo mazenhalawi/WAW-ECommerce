@@ -1,8 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:waw_app/Blocs/CartBloc.dart';
+import 'package:waw_app/Blocs/HomeBloc.dart';
+import 'package:waw_app/Blocs/WishlistBloc.dart';
 import 'package:waw_app/Models/Campaign.dart';
 import 'package:waw_app/Utility/Constants.dart';
 import 'package:waw_app/Utility/wawapp_icons.dart';
+import 'package:waw_app/Views/CircularButton.dart';
+import 'package:waw_app/Views/QuantityAdjuster.dart';
 
 class CampaignView extends StatelessWidget {
   final Campaign campaign;
@@ -59,7 +65,13 @@ class CampaignView extends StatelessWidget {
                 WAWApp.heart,
                 color: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<WishlistBloc>(context, listen: false)
+                    .addToWishList(campaign: this.campaign);
+                showSnackbar(
+                    context: context,
+                    text: '${campaign.productName} was added to Wish list.');
+              },
             ),
           ),
           //Add to Cart Button
@@ -72,7 +84,15 @@ class CampaignView extends StatelessWidget {
                 CupertinoIcons.cart_badge_plus,
                 color: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+                final qty = Provider.of<HomeBloc>(context, listen: false)
+                    .quantityOrdered(campaign.campaignID);
+                Provider.of<CartBloc>(context, listen: false)
+                    .addToCart(campaign, qty);
+                showSnackbar(
+                    context: context,
+                    text: '${campaign.productName} was added to cart.');
+              },
             ),
           ),
           //Circle Sales Percentage Indicator
@@ -92,7 +112,10 @@ class CampaignView extends StatelessWidget {
           Positioned(
             top: 90,
             right: -20,
-            child: QuantityAdjuster(),
+            child: QuantityAdjuster(
+              availableQty: campaign.availableStock,
+              campaignID: campaign.campaignID,
+            ),
           ),
           //Price Tag
           Positioned(
@@ -117,6 +140,16 @@ class CampaignView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void showSnackbar({@required BuildContext context, @required String text}) {
+    final snackbar = SnackBar(
+      content: Text(text),
+      elevation: 5,
+      duration: Duration(seconds: 2),
+    );
+    Scaffold.of(context).hideCurrentSnackBar();
+    Scaffold.of(context).showSnackBar(snackbar);
   }
 
   Widget PrizeLabel(
@@ -223,65 +256,7 @@ class CampaignView extends StatelessWidget {
     );
   }
 
-  Widget QuantityAdjuster() {
-    final double width = 40;
-    final double height = 125;
-
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-              offset: Offset(0, 1),
-              blurRadius: 5,
-              spreadRadius: 0.2,
-              color: Colors.black45)
-        ],
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CircularButton(
-                radius: 12,
-                icon: Icon(
-                  WAWApp.plus,
-                  color: Colors.white,
-                ),
-                onPressed: () => print('adding an item')),
-            SizedBox(
-              width: width - 10,
-              height: 20,
-              child: FittedBox(
-                child: Text(
-                  '20',
-                  maxLines: 1,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20),
-                ),
-              ),
-            ),
-            CircularButton(
-                radius: 12,
-                icon: Icon(
-                  WAWApp.minus,
-                  color: Colors.white,
-                ),
-                onPressed: () => print('removing an item')),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget SalesInfoCircle({@required int sold = 0, @required int stock = 0}) {
+  Widget SalesInfoCircle({@required int sold, @required int stock}) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -341,24 +316,6 @@ class CampaignView extends StatelessWidget {
         valueColor: AlwaysStoppedAnimation<Color>(kPRIMARY_COLOR),
         strokeWidth: 6,
         value: completion,
-      ),
-    );
-  }
-
-  Widget CircularButton(
-      {@required double radius, Icon icon, Function onPressed}) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: CircleAvatar(
-        radius: radius,
-        backgroundColor: kPRIMARY_COLOR,
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: IconButton(
-            icon: icon,
-            onPressed: onPressed,
-          ),
-        ),
       ),
     );
   }

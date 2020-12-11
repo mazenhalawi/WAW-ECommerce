@@ -5,21 +5,21 @@ import 'package:waw_app/Models/Product.dart';
 import 'Offer.dart';
 
 class Campaign {
-  int id;
-  String maxDrawDate; // "1999-09-05 14:37:48",
-  int productQuantity;
-  int quantitySold;
-  String status; //"active"
-  String code;
-  int ticketCount;
-  int donateTicketCount;
-  int earlyBirdCount;
-  int earlyBirdTicketCount;
-  int price;
-  int isFavorite;
-  Product product;
-  Prize prize;
-  List<Offer> offers;
+  final int id;
+  final String maxDrawDate; // "1999-09-05 14:37:48",
+  final int productQuantity;
+  final int quantitySold;
+  final String status; //"active"
+  final String code;
+  final int ticketCount;
+  final int donateTicketCount;
+  final int earlyBirdCount;
+  final int earlyBirdTicketCount;
+  final int price;
+  final int isFavorite;
+  final Product product;
+  final Prize prize;
+  final List<Offer> offers;
 
   Campaign({
     @required this.id,
@@ -82,4 +82,6 @@ class Campaign {
   int get qtyStock => this.productQuantity;
 
   double get qtyPercentage => this.quantitySold / this.productQuantity;
+
+  int get availableStock => this.productQuantity - this.quantitySold;
 }

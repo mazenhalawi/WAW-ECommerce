@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 
 class Prize {
-  int id;
-  bool isPrize;
-  String image;
-  String name;
-  String description;
+  final int id;
+  final bool isPrize;
+  final String image;
+  final String name;
+  final String description;
 
   Prize(
       {@required this.id,
