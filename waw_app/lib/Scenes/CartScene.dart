@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:waw_app/Blocs/CartBloc.dart';
+import 'package:waw_app/Views/CartView.dart';
 
 class CartScene extends StatefulWidget {
   static const SceneName = 'CartScene';
@@ -25,8 +26,9 @@ class _CartSceneState extends State<CartScene>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Text(
-            'number of items in cart: ${_bloc.numberOFItemsInCart.toString()}'),
+        child: ListView(
+          children: [CartView(campaign: _bloc.firstCampaign)],
+        ),
       ),
     );
   }

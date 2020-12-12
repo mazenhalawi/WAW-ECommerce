@@ -95,10 +95,8 @@ class CampaignView extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
-                final qty = Provider.of<HomeBloc>(context, listen: false)
-                    .quantityOrdered(campaign.campaignID);
                 Provider.of<CartBloc>(context, listen: false)
-                    .addToCart(campaign, qty);
+                    .addToCart(campaign);
                 showSnackbar(
                     context: context,
                     text: '${campaign.productName} was added to cart.');

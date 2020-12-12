@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:waw_app/Blocs/OrderBloc.dart';
 import 'package:waw_app/Blocs/WishlistBloc.dart';
 import 'package:waw_app/Managers/NavManager.dart';
 
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
     );
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => OrderBloc.shared),
         ChangeNotifierProvider(create: (_) => CartBloc()),
         ChangeNotifierProvider(create: (_) => HomeBloc()),
         ChangeNotifierProvider(create: (_) => WishlistBloc())

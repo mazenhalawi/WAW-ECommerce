@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:waw_app/Blocs/HomeBloc.dart';
+import 'package:waw_app/Blocs/OrderBloc.dart';
 import 'package:waw_app/Utility/wawapp_icons.dart';
 import 'package:waw_app/Views/CircularButton.dart';
 
@@ -18,6 +18,15 @@ class _QuantityAdjusterState extends State<QuantityAdjuster> {
   int _currentQty = 1;
   final double _width = 40;
   final double _height = 125;
+  OrderBloc _bloc;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_bloc == null) {
+      _bloc = Provider.of<OrderBloc>(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +57,15 @@ class _QuantityAdjusterState extends State<QuantityAdjuster> {
                 color: Colors.white,
               ),
               onPressed: () {
+                _currentQty =
+                    _bloc.orders[widget.campaignID.toString()] ?? _currentQty;
                 if (_currentQty >= widget.availableQty) return;
                 setState(() {
                   _currentQty += 1;
                 });
-                Provider.of<HomeBloc>(context, listen: false)
-                    .updateQuantityForCampaign(widget.campaignID, _currentQty);
+                _bloc.updateOrders(
+                    campaignID: widget.campaignID.toString(),
+                    quantity: _currentQty);
               },
             ),
             SizedBox(
@@ -61,7 +73,9 @@ class _QuantityAdjusterState extends State<QuantityAdjuster> {
               height: 20,
               child: FittedBox(
                 child: Text(
-                  _currentQty.toString(),
+                  _bloc.orders[widget.campaignID.toString()] == null
+                      ? '1'
+                      : _bloc.orders[widget.campaignID.toString()].toString(),
                   maxLines: 1,
                   style: TextStyle(
                       color: Colors.black,
@@ -77,12 +91,15 @@ class _QuantityAdjusterState extends State<QuantityAdjuster> {
                 color: Colors.white,
               ),
               onPressed: () {
+                _currentQty =
+                    _bloc.orders[widget.campaignID.toString()] ?? _currentQty;
                 if (this._currentQty <= 1) return;
                 setState(() {
                   this._currentQty -= 1;
                 });
-                Provider.of<HomeBloc>(context, listen: false)
-                    .updateQuantityForCampaign(widget.campaignID, _currentQty);
+                _bloc.updateOrders(
+                    campaignID: widget.campaignID.toString(),
+                    quantity: _currentQty);
               },
             ),
           ],
