@@ -14,10 +14,13 @@ class OrderBloc extends ChangeNotifier {
     notifyListeners();
   }
 
+  //When deleted from Shopping Cart
   void deleteOrder({@required String campaignID}) {
     _orders.remove(campaignID);
+    notifyListeners();
   }
 
+  //When customer makes purchase of items in Shopping Cart
   void deleteAllOrders() {
     _orders = {};
   }

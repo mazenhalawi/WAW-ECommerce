@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:waw_app/Blocs/CartBloc.dart';
 import 'package:waw_app/Models/Campaign.dart';
 import 'package:waw_app/Utility/Constants.dart';
 import 'package:waw_app/Views/CircularButton.dart';
@@ -18,6 +20,7 @@ class CartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
+    final _bloc = Provider.of<CartBloc>(context);
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -59,12 +62,12 @@ class CartView extends StatelessWidget {
               child: CircularButton(
                 icon: Icon(
                   Icons.delete_forever,
-                  size: 30,
+                  size: 25,
                   color: Colors.white,
                 ),
                 radius: 20,
                 backgroundColor: Colors.red,
-                onPressed: () {},
+                onPressed: () => _bloc.removeFromCart(campaign: campaign),
               ),
             ),
             //Price
@@ -81,15 +84,17 @@ class CartView extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: 50,
-              right: 15,
+              bottom: 30,
+              right: 5,
               child: Container(
-                color: Colors.red,
-                width: 40,
-                height: _mediaQuery.size.width * imageCardRatio + 20,
+                width: 60,
+                height: _mediaQuery.size.width * imageCardRatio + 40,
                 child: QuantityAdjuster(
-                  campaignID: campaign.id,
+                  campID: campaign.id,
                   availableQty: campaign.availableStock,
+                  width: 50,
+                  height: _mediaQuery.size.width * imageCardRatio + 40,
+                  hideDropShadow: true,
                 ),
               ),
             ),

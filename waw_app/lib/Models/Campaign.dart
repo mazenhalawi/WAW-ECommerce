@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:waw_app/Models/Prize.dart';
 import 'package:waw_app/Models/Product.dart';
 
 import 'Offer.dart';
 
-class Campaign {
+class Campaign extends Equatable {
   final int id;
   final String maxDrawDate; // "1999-09-05 14:37:48",
   final int productQuantity;
@@ -61,7 +62,7 @@ class Campaign {
     );
   }
 
-  int get campaignID => this.id;
+  String get campaignID => this.id.toString();
 
   int get productID => this.product.id;
 
@@ -86,4 +87,7 @@ class Campaign {
   double get qtyPercentage => this.quantitySold / this.productQuantity;
 
   int get availableStock => this.productQuantity - this.quantitySold;
+
+  @override
+  List<Object> get props => [id];
 }

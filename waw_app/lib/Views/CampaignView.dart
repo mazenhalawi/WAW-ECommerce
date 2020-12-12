@@ -34,6 +34,7 @@ class CampaignView extends StatelessWidget {
       ),
       child: Stack(
         clipBehavior: Clip.none,
+        overflow: Overflow.visible,
         children: [
           Container(
             width: mediaQuery.size.width * containerWidthRatio,
@@ -122,10 +123,10 @@ class CampaignView extends StatelessWidget {
           //Quantity Adjuster
           Positioned(
             top: 90,
-            right: -20,
+            right: -10,
             child: QuantityAdjuster(
               availableQty: campaign.availableStock,
-              campaignID: campaign.campaignID,
+              campID: campaign.id,
             ),
           ),
           //Price Tag

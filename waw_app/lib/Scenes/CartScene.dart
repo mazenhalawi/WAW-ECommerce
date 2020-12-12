@@ -27,7 +27,7 @@ class _CartSceneState extends State<CartScene>
     return Scaffold(
       body: Container(
         child: ListView(
-          children: [CartView(campaign: _bloc.firstCampaign)],
+          children: _bloc.cartItems.map((e) => CartView(campaign: e)).toList(),
         ),
       ),
     );
