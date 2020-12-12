@@ -34,6 +34,7 @@ class CampaignView extends StatelessWidget {
       ),
       child: Stack(
         clipBehavior: Clip.none,
+        overflow: Overflow.visible,
         children: [
           Container(
             width: mediaQuery.size.width * containerWidthRatio,
@@ -95,10 +96,8 @@ class CampaignView extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
-                final qty = Provider.of<HomeBloc>(context, listen: false)
-                    .quantityOrdered(campaign.campaignID);
                 Provider.of<CartBloc>(context, listen: false)
-                    .addToCart(campaign, qty);
+                    .addToCart(campaign);
                 showSnackbar(
                     context: context,
                     text: '${campaign.productName} was added to cart.');
@@ -124,10 +123,10 @@ class CampaignView extends StatelessWidget {
           //Quantity Adjuster
           Positioned(
             top: 90,
-            right: -20,
+            right: -10,
             child: QuantityAdjuster(
               availableQty: campaign.availableStock,
-              campaignID: campaign.campaignID,
+              campID: campaign.id,
             ),
           ),
           //Price Tag

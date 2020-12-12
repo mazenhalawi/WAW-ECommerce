@@ -15,18 +15,12 @@ class CircularButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: CircleAvatar(
-        radius: radius,
-        backgroundColor: backgroundColor,
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: IconButton(
-            icon: icon,
-            onPressed: onPressed,
-          ),
-        ),
+    return CircleAvatar(
+      radius: radius,
+      backgroundColor: backgroundColor,
+      child: IconButton(
+        icon: icon,
+        onPressed: onPressed,
       ),
     );
   }

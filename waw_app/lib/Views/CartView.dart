@@ -1,26 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:waw_app/Blocs/WishlistBloc.dart';
+import 'package:waw_app/Blocs/CartBloc.dart';
 import 'package:waw_app/Models/Campaign.dart';
 import 'package:waw_app/Utility/Constants.dart';
 import 'package:waw_app/Views/CircularButton.dart';
-import 'package:waw_app/Views/CircularIndicator.dart';
-import 'package:waw_app/Views/InfoCircle.dart';
+import 'package:waw_app/Views/QuantityAdjuster.dart';
 
 import 'ImageCard.dart';
 
-class WishlistView extends StatelessWidget {
+class CartView extends StatelessWidget {
   final Campaign campaign;
   final imageCardRatio = 0.25;
   final cardWidthRatio = 0.9;
   final cardHeightRatio = 0.7;
 
-  WishlistView({@required this.campaign});
+  CartView({@required this.campaign});
 
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
+    final _bloc = Provider.of<CartBloc>(context);
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -55,54 +55,20 @@ class WishlistView extends StatelessWidget {
                 name: campaign.prizeName,
               ),
             ),
-            //Vertical Action Buttons : Add To Cart + Delete
+            //Delete Button
             Positioned(
               top: 30,
               right: 15,
-              child: Column(
-                children: [
-                  CircularButton(
-                      icon: Icon(
-                        CupertinoIcons.cart_badge_plus,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      radius: 20,
-                      //TODO: Add functionality for adding item to cart and removing it from Wishlist
-                      onPressed: () => print('added to cart')),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  CircularButton(
-                      icon: Icon(
-                        Icons.delete_forever,
-                        size: 30,
-                        color: Colors.white,
-                      ),
-                      radius: 20,
-                      backgroundColor: Colors.red,
-                      onPressed: () =>
-                          Provider.of<WishlistBloc>(context, listen: false)
-                              .removeFromWishList(campaign: campaign)),
-                ],
+              child: CircularButton(
+                icon: Icon(
+                  Icons.delete_forever,
+                  size: 25,
+                  color: Colors.white,
+                ),
+                radius: 20,
+                backgroundColor: Colors.red,
+                onPressed: () => _bloc.removeFromCart(campaign: campaign),
               ),
-            ),
-            //Circular Indicator View
-            Positioned(
-              bottom: 30,
-              right: 15,
-              child: CircularIndicator(
-                width: 95,
-                height: 95,
-                percentage: campaign.qtyPercentage,
-              ),
-            ),
-            //Circular Sales Info View
-            Positioned(
-              bottom: 42.5,
-              right: 27.5,
-              child:
-                  InfoCircle(sold: campaign.qtySold, stock: campaign.qtyStock),
             ),
             //Price
             Positioned(
@@ -116,7 +82,22 @@ class WishlistView extends StatelessWidget {
                   fontSize: 20,
                 ),
               ),
-            )
+            ),
+            Positioned(
+              bottom: 30,
+              right: 5,
+              child: Container(
+                width: 60,
+                height: _mediaQuery.size.width * imageCardRatio + 40,
+                child: QuantityAdjuster(
+                  campID: campaign.id,
+                  availableQty: campaign.availableStock,
+                  width: 50,
+                  height: _mediaQuery.size.width * imageCardRatio + 40,
+                  hideDropShadow: true,
+                ),
+              ),
+            ),
           ],
         ),
       ),

@@ -10,8 +10,6 @@ class ApiResponse {
   ApiResponse({this.data, this.status, this.message, this.code});
 
   factory ApiResponse.fromJSON(Map<String, dynamic> json) {
-    print(json['message']);
-
     String message = '';
     if (json['message'] is Map) {
       final messages = json['message'] as Map<String, dynamic>;

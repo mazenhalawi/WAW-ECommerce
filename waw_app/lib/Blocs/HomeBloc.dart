@@ -12,21 +12,13 @@ class HomeBloc with ChangeNotifier {
   final connManager = ConnectionManager();
   final _downloadController = BehaviorSubject<List<Map<String, dynamic>>>();
   final _campaignController = BehaviorSubject<List<Campaign>>();
-  final Map<String, int> _orderQuantities = {};
 
   Stream<List<Campaign>> get campaign$ => _campaignController.stream;
-
-  int quantityOrdered(int campaignID) =>
-      _orderQuantities[campaignID.toString()] ?? 1;
 
   HomeBloc() {
     _downloadController.stream
         .transform(_mapToCampaignTransformer)
         .pipe(_campaignController);
-  }
-
-  void updateQuantityForCampaign(int campaignID, int quantity) {
-    _orderQuantities[campaignID.toString()] = quantity;
   }
 
   Future<void> getCampaigns() async {
